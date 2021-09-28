@@ -90,5 +90,27 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-  
+    private void login(String email, String password) {
+
+        mAuth.signInWithEmailAndPassword(email,password)
+                .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+
+                        if(task.isSuccessful()){
+
+                            mLoginProgress.dismiss();
+                            Intent main_Intent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(main_Intent);
+                            Toast.makeText(LoginActivity.this,"Successfully Logged IN",Toast.LENGTH_LONG).show();
+                        }
+                        else {
+
+                            mLoginProgress.dismiss();
+                            Toast.makeText(LoginActivity.this,"Entered Email & Password is wrong",Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+
+    }
 }
